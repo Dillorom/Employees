@@ -55,7 +55,13 @@ namespace Employees
                 }
                 else if (command == "Sort")
                 {
-                    Console.WriteLine($"Sorted List:\n{employees.OrderBy(e => e.Name)}");
+                    List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).ToList();
+
+                    foreach (Employee e in sortedEmployees)
+                    {
+                        Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                $" Salary: {e.Salary}");
+                    };
                 }
                 else if (command == "Find")
                 {
