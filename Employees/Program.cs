@@ -55,7 +55,7 @@ namespace Employees
                 }
                 else if (command == "Sort")
                 {
-                    employees.OrderBy(e => e.Name);
+                    Console.WriteLine($"Sorted List:\n{employees.OrderBy(e => e.Name)}");
                 }
                 else if (command == "Find")
                 {
