@@ -8,7 +8,7 @@ namespace Employees
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public int Salary { get; set; }
     }
 }

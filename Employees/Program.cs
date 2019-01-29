@@ -27,7 +27,9 @@ namespace Employees
                     newEmployee.Name = Console.ReadLine();
 
                     Console.WriteLine("What is the date of birth of the new employee?");
-                    newEmployee.DateOfBirth = Console.ReadLine();
+                    String  dateOfBirth = Console.ReadLine();
+                    DateTime DateOfBirth = DateTime.Parse(dateOfBirth);
+                    newEmployee.DateOfBirth = DateOfBirth;
 
                     Console.WriteLine("What is the salary of the new employee?");
                     newEmployee.Salary = int.Parse(Console.ReadLine());
@@ -38,7 +40,6 @@ namespace Employees
                 }
                 else if (command == "List")
                 {
-
                     if (employees.Count != 0)
                     {
                         for (int i = 0; i < employees.Count; i++)
@@ -51,7 +52,6 @@ namespace Employees
                     {
                         Console.WriteLine("*** There are no employees in the list. ***");
                     };
-
                 }
                 else if (command == "Sort")
                 {
@@ -68,9 +68,11 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).ToList();
 
+                            Console.WriteLine("Sorting employees in an ascending order by name: ");
+
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Sorting employees in an ascending order by name:\nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -78,9 +80,11 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).Reverse().ToList();
 
+                            Console.WriteLine("Sorting employees in a descending order by name: ");
+
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Sorting employees in a descending order by name:\nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -88,7 +92,6 @@ namespace Employees
                         {
                             Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
                         }
-
                     }
                     else if (category == "DateOfBirth")
                     {
@@ -100,9 +103,11 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).ToList();
 
+                            Console.WriteLine("Sorting employees in an ascending order by date of birth: ");
+
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Sorting employees in an ascending order by date of birth:\nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -110,12 +115,15 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).Reverse().ToList();
 
+                            Console.WriteLine("Sorting employees in a descending order by date of birth: ");
+
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Sorting employees in a descending order by date of birth: \nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
+                        else
                         {
                             Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
                         };
@@ -130,9 +138,11 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).ToList();
 
+                            Console.WriteLine("Sorting employees in an ascending order by salary: ");
+
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Sorting employees in an ascending order by salary: \nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -140,9 +150,11 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).Reverse().ToList();
 
+                            Console.WriteLine("Sorting employees in a descending order by salary: ");
+
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Sorting employees in a descending order by salary: \nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -185,7 +197,9 @@ namespace Employees
 
                         string enteredDateOfBirth = Console.ReadLine();
 
-                        List<Employee> foundEmployees = employees.FindAll(e => e.DateOfBirth == enteredDateOfBirth);
+                        DateTime convertedDateOfBirth = DateTime.Parse(enteredDateOfBirth);
+
+                        List<Employee> foundEmployees = employees.FindAll(e => e.DateOfBirth == convertedDateOfBirth);
 
                         if (foundEmployees.Count != 0)
                         {
@@ -197,7 +211,7 @@ namespace Employees
                         }
                         else
                         {
-                            Console.WriteLine($"No employee with {enteredDateOfBirth} found in the list.");
+                            Console.WriteLine($"No employee with date of birth of {enteredDateOfBirth} found in the list.");
                         };
                     }
                     else if (category == "Salary")
@@ -266,7 +280,7 @@ namespace Employees
                 else
                 {
                     Console.WriteLine("*** I do not understand this command. Please, try again." +
-                        " Enter of of the options: Add, List, Sort, Find, Remove.***");
+                        "Enter of of the options: Add, List, Sort, Find, Remove.***");
                 };
             };
         }
