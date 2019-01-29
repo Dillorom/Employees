@@ -14,7 +14,7 @@ namespace Employees
 
             while (!exit)
             {
-                Console.WriteLine("What would you like to do?");
+                Console.WriteLine("What would you like to do? Enter one of the options: Add, List, Sort, Find, Remove.");
 
                 string command = Console.ReadLine();
 
@@ -70,7 +70,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Sorting employees in an ascending order by name:\nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -80,7 +80,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Sorting employees in a descending order by name:\nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -102,7 +102,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Sorting employees in an ascending order by date of birth:\nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -112,7 +112,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Sorting employees in a descending order by date of birth: \nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -132,7 +132,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Sorting employees in an ascending order by salary: \nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -142,7 +142,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth}," +
+                                Console.WriteLine($"Sorting employees in a descending order by salary: \nName: {e.Name}, Date of Birth: {e.DateOfBirth}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -176,7 +176,7 @@ namespace Employees
                         }
                         else
                         {
-                            Console.WriteLine($"No employee by {enteredName} found in the list.");
+                            Console.WriteLine($"No employee with {enteredName} found in the list.");
                         };
                     }
                     else if (category == "DateOfBirth")
@@ -197,7 +197,7 @@ namespace Employees
                         }
                         else
                         {
-                            Console.WriteLine($"No employee by {enteredDateOfBirth} found in the list.");
+                            Console.WriteLine($"No employee with {enteredDateOfBirth} found in the list.");
                         };
                     }
                     else if (category == "Salary")
@@ -218,7 +218,7 @@ namespace Employees
                         }
                         else
                         {
-                            Console.WriteLine($"No employee by {enteredSalary} found in the list.");
+                            Console.WriteLine($"No employee with {enteredSalary} found in the list.");
                         };
                     }
                     else
@@ -232,11 +232,28 @@ namespace Employees
 
                     string name = Console.ReadLine();
 
-                    Employee foundEmployee = employees.Find(e => e.Name == name);
+                    List<Employee> toBeRemovedEmployees = employees.FindAll(e => e.Name == name);
 
-                    employees.Remove(foundEmployee);
+                    if (toBeRemovedEmployees.Count > 1)
+                    {
+                        Console.WriteLine($"Which {name} would you like to remove? Please, select the employee number fromt he list.");
 
-                    Console.WriteLine($"Employee {foundEmployee.Name} has been removed from the list.");
+                        for (int i = 0; i < toBeRemovedEmployees.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {toBeRemovedEmployees[i].Name}, {toBeRemovedEmployees[i].DateOfBirth}, {toBeRemovedEmployees[i].Salary}.");
+                        }
+                        int enteredNumber = int.Parse(Console.ReadLine());
+
+                        employees.Remove(toBeRemovedEmployees[enteredNumber - 1]);
+                        Console.WriteLine($"Employee Name: {toBeRemovedEmployees[enteredNumber - 1].Name}, Date of Birth: {toBeRemovedEmployees[enteredNumber - 1].DateOfBirth}, " +
+                            $"Salary: {toBeRemovedEmployees[enteredNumber - 1].Salary} has been removed from the list.");
+                    }
+                    else
+                    {
+                        employees.Remove(toBeRemovedEmployees[0]);
+                        Console.WriteLine($"Employee Name: {toBeRemovedEmployees[0].Name}, Date of Birth: {toBeRemovedEmployees[0].DateOfBirth}, " +
+                            $"Salary: {toBeRemovedEmployees[0].Salary} has been removed from the list.");
+                    }
                 }
                 else if (command == "Exit")
                 {
@@ -248,7 +265,8 @@ namespace Employees
                 }
                 else
                 {
-                    Console.WriteLine("*** I don't recognize this command. Please, try again. All commands start in capital letters.***");
+                    Console.WriteLine("*** I do not understand this command. Please, try again." +
+                        " Enter of of the options: Add, List, Sort, Find, Remove.***");
                 };
             };
         }
