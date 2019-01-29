@@ -26,33 +26,54 @@ namespace Employees
                     Console.WriteLine("What is the name of a new employee?");
                     newEmployee.Name = Console.ReadLine();
 
-                    Console.WriteLine("What is the date of birth of the new employee? Format options: 'MM/DD/YY', 'MM/DD/YYYY',\n" +
-                        " 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'." );
-                    try
+                    bool condition = true;
+                    while (condition)
                     {
-                        string dateOfBirth = Console.ReadLine();
-                        DateTime DateOfBirth = DateTime.Parse(dateOfBirth);
-                        newEmployee.DateOfBirth = DateOfBirth;
-                    }
-                    catch (Exception e)
-                    {
+                        Console.WriteLine("What is the date of birth of the new employee? Format options: 'MM/DD/YY', 'MM/DD/YYYY',\n" +
+                        " 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'.");
 
-                        Console.WriteLine("Error! Please, enter date of birth in a correct format as suggested above.");
-                    }
+                        try
+                        {
+                            string dateOfBirth = Console.ReadLine();
 
-                    try
+                            DateTime DateOfBirth = DateTime.Parse(dateOfBirth);
+
+                            newEmployee.DateOfBirth = DateOfBirth;
+                            if (!newEmployee.ValidDateOfBirth())
+                            {
+                                Console.WriteLine("Error! Please, enter date of birth in a correct format as suggested above.");
+                            }
+                            else
+                            {
+                                condition = false;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Error! Please, enter date of birth in a correct format as suggested above.");
+                        }
+                        //if (!newEmployee.ValidDateOfBirth())
+                        //{
+                        //    condition = false;
+                        //}
+                    };
+
+                    while (!newEmployee.ValidSalary())
                     {
                         Console.WriteLine("What is the salary of the new employee?");
-                        newEmployee.Salary = int.Parse(Console.ReadLine());
-                    }
-                    catch (Exception e)
-                    {
 
-                        Console.WriteLine("Error! Please, enter digits only.");
+                        try
+                        {
+                            newEmployee.Salary = int.Parse(Console.ReadLine());
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Error! Please, enter digits only.");
+                        }
                     }
-                    
 
                     employees.Add(newEmployee);
+
                     Console.WriteLine($"New employee {newEmployee.Name} with date of birth on\n" +
                         $" {newEmployee.DateOfBirth.ToString("dd/MM/yyyy")} and salary of {newEmployee.Salary} has been added.");
                 }
