@@ -22,17 +22,28 @@ namespace Employees
             {
                 return true;
             }
-            return true;
+            else
+            {
+                return false;
+            }
         }
 
         public bool ValidSalary()
         {
             System.Type integer = typeof(int);
+  
             if (this.Salary.GetType() == integer)
             {
                 return true;
             }
-            return true;
+            else if (this.Salary == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

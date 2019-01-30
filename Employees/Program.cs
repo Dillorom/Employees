@@ -27,6 +27,7 @@ namespace Employees
                     newEmployee.Name = Console.ReadLine();
 
                     bool condition = true;
+
                     while (condition)
                     {
                         Console.WriteLine("What is the date of birth of the new employee? Format options: 'MM/DD/YY', 'MM/DD/YYYY',\n" +
@@ -39,6 +40,7 @@ namespace Employees
                             DateTime DateOfBirth = DateTime.Parse(dateOfBirth);
 
                             newEmployee.DateOfBirth = DateOfBirth;
+
                             if (!newEmployee.ValidDateOfBirth())
                             {
                                 Console.WriteLine("Error! Please, enter date of birth in a correct format as suggested above.");
@@ -52,30 +54,37 @@ namespace Employees
                         {
                             Console.WriteLine("Error! Please, enter date of birth in a correct format as suggested above.");
                         }
-                        //if (!newEmployee.ValidDateOfBirth())
-                        //{
-                        //    condition = false;
-                        //}
                     };
 
-                    while (!newEmployee.ValidSalary())
+                    while (!condition)
                     {
                         Console.WriteLine("What is the salary of the new employee?");
 
                         try
                         {
                             newEmployee.Salary = int.Parse(Console.ReadLine());
+
+                            if (!newEmployee.ValidSalary())
+                            {
+                                Console.WriteLine("Error! Please, enter the date of birth in a correct format as suggested above.");
+                            }
+                            else
+                            {
+                                if (newEmployee.ValidDateOfBirth() && newEmployee.ValidSalary())
+                                {
+                                    employees.Add(newEmployee);
+
+                                    Console.WriteLine($"New employee {newEmployee.Name} with date of birth on\n" +
+                                        $" {newEmployee.DateOfBirth.ToString("MM/dd/yyyy")} and salary of {newEmployee.Salary} has been added.");
+                                    break;
+                                }
+                            };
                         }
                         catch (Exception)
                         {
                             Console.WriteLine("Error! Please, enter digits only.");
-                        }
-                    }
-
-                    employees.Add(newEmployee);
-
-                    Console.WriteLine($"New employee {newEmployee.Name} with date of birth on\n" +
-                        $" {newEmployee.DateOfBirth.ToString("dd/MM/yyyy")} and salary of {newEmployee.Salary} has been added.");
+                        };
+                    };
                 }
                 else if (command == "List")
                 {
@@ -83,7 +92,7 @@ namespace Employees
                     {
                         for (int i = 0; i < employees.Count; i++)
                         {
-                            Console.WriteLine($"{i + 1}. Name: {employees[i].Name}, Date of Birth: {employees[i].DateOfBirth.ToString("dd/MM/yyyy")}," +
+                            Console.WriteLine($"{i + 1}. Name: {employees[i].Name}, Date of Birth: {employees[i].DateOfBirth.ToString("MM/dd/yyyy")}," +
                                 $" Salary: {employees[i].Salary}");
                         };
                     }
@@ -103,6 +112,7 @@ namespace Employees
                         Console.WriteLine("Ascending or Descending?");
 
                         string choice = Console.ReadLine();
+
                         if (choice == "Ascending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).ToList();
@@ -111,7 +121,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -123,7 +133,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -146,7 +156,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -158,7 +168,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -181,7 +191,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -193,7 +203,7 @@ namespace Employees
 
                             foreach (Employee e in sortedEmployees)
                             {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
+                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                                         $" Salary: {e.Salary}");
                             };
                         }
@@ -221,7 +231,7 @@ namespace Employees
                         {
                             foreach (Employee e in foundEmployees)
                             {
-                                Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
+                                Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                                     $" Salary: {e.Salary}");
                             };
                         }
@@ -234,23 +244,30 @@ namespace Employees
                     {
                         Console.WriteLine("Enter the employee DateOfBirth. Format options: 'MM/DD/YY', 'MM/DD/YYYY', 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'.");
 
-                        string enteredDateOfBirth = Console.ReadLine();
-
-                        DateTime convertedDateOfBirth = DateTime.Parse(enteredDateOfBirth);
-
-                        List<Employee> foundEmployees = employees.FindAll(e => e.DateOfBirth == convertedDateOfBirth);
-
-                        if (foundEmployees.Count != 0)
+                        try
                         {
-                            foreach (Employee e in foundEmployees)
+                            string enteredDateOfBirth = Console.ReadLine();
+
+                            DateTime convertedDateOfBirth = DateTime.Parse(enteredDateOfBirth);
+
+                            List<Employee> foundEmployees = employees.FindAll(e => e.DateOfBirth == convertedDateOfBirth);
+
+                            if (foundEmployees.Count != 0)
                             {
-                                Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
-                                    $" Salary: {e.Salary}");
+                                foreach (Employee e in foundEmployees)
+                                {
+                                    Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
+                                        $" Salary: {e.Salary}");
+                                };
+                            }
+                            else
+                            {
+                                Console.WriteLine($"No employee with date of birth of {enteredDateOfBirth} found in the list.");
                             };
                         }
-                        else
+                        catch (Exception)
                         {
-                            Console.WriteLine($"No employee with date of birth of {enteredDateOfBirth} found in the list.");
+                            Console.WriteLine("Error! Please, enter the date of birth in a correct format as suggested above.");
                         };
                     }
                     else if (category == "Salary")
@@ -265,7 +282,7 @@ namespace Employees
                         {
                             foreach (Employee e in foundEmployees)
                             {
-                                Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("dd/MM/yyyy")}," +
+                                Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                                     $" Salary: {e.Salary}");
                             };
                         }
@@ -293,20 +310,23 @@ namespace Employees
 
                         for (int i = 0; i < toBeRemovedEmployees.Count; i++)
                         {
-                            Console.WriteLine($"{i + 1}. {toBeRemovedEmployees[i].Name}, {toBeRemovedEmployees[i].DateOfBirth.ToString("dd/MM/yyyy")}, " +
+                            Console.WriteLine($"{i + 1}. {toBeRemovedEmployees[i].Name}, {toBeRemovedEmployees[i].DateOfBirth.ToString("MM/dd/yyyy")}, " +
                                 $"{toBeRemovedEmployees[i].Salary}.");
                         }
+
                         int enteredNumber = int.Parse(Console.ReadLine());
 
                         employees.Remove(toBeRemovedEmployees[enteredNumber - 1]);
+
                         Console.WriteLine($"Employee Name: {toBeRemovedEmployees[enteredNumber - 1].Name}, Date of Birth:" +
-                            $" {toBeRemovedEmployees[enteredNumber - 1].DateOfBirth.ToString("dd/MM/yyyy")}, " +
+                            $" {toBeRemovedEmployees[enteredNumber - 1].DateOfBirth.ToString("MM/dd/yyyy")}, " +
                             $"Salary: {toBeRemovedEmployees[enteredNumber - 1].Salary} has been removed from the list.");
                     }
                     else
                     {
                         employees.Remove(toBeRemovedEmployees[0]);
-                        Console.WriteLine($"Employee Name: {toBeRemovedEmployees[0].Name}, Date of Birth: {toBeRemovedEmployees[0].DateOfBirth.ToString("dd/MM/yyyy")}, " +
+
+                        Console.WriteLine($"Employee Name: {toBeRemovedEmployees[0].Name}, Date of Birth: {toBeRemovedEmployees[0].DateOfBirth.ToString("MM/dd/yyyy")}, " +
                             $"Salary: {toBeRemovedEmployees[0].Salary} has been removed from the list.");
                     }
                 }
@@ -325,8 +345,8 @@ namespace Employees
                 };
             };
         }
-    }
-}
+    };
+};
 
 
 
