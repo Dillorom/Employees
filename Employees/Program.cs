@@ -12,6 +12,8 @@ namespace Employees
 
         static string category;
 
+        static string enteredData;
+
         static void Main(string[] args)
         {
             bool exit = false;
@@ -46,7 +48,7 @@ namespace Employees
 
                             if (!newEmployee.ValidDateOfBirth())
                             {
-                                Console.WriteLine("Error! Please, enter date of birth in a correct format as suggested above.");
+                                InvalidInpubMessage();
                             }
                             else
                             {
@@ -55,7 +57,7 @@ namespace Employees
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Error! Please, enter date of birth in a correct format as suggested above.");
+                            InvalidInpubMessage();
                         }
                     };
 
@@ -69,7 +71,7 @@ namespace Employees
 
                             if (!newEmployee.ValidSalary())
                             {
-                                Console.WriteLine("Error!Please, enter digits only.");
+                                InvalidInpubMessage();
                             }
                             else
                             {
@@ -85,7 +87,7 @@ namespace Employees
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Error! Please, enter digits only.");
+                            InvalidInpubMessage();
                         };
                     };
                 }
@@ -126,7 +128,7 @@ namespace Employees
                         }
                         else
                         {
-                            Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
+                            SortingDirectionError();
                         }
                     }
                     else if (category == "DateOfBirth")
@@ -147,7 +149,7 @@ namespace Employees
                         }
                         else
                         {
-                            Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
+                            SortingDirectionError();
                         };
                     }
                     else if (category == "Salary")
@@ -168,7 +170,7 @@ namespace Employees
                         }
                         else
                         {
-                            Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
+                            SortingDirectionError();
                         };
                     };
                 }
@@ -178,20 +180,11 @@ namespace Employees
 
                     if (category == "Name")
                     {
-                        Console.WriteLine("Enter the employee name.");
+                        FindByPrompt(category);
 
-                        string enteredName = Console.ReadLine();
+                        List<Employee> foundEmployees = employees.FindAll(e => e.Name == enteredData);
 
-                        List<Employee> foundEmployees = employees.FindAll(e => e.Name == enteredName);
-
-                        if (foundEmployees.Count != 0)
-                        {
-                            Result(foundEmployees);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"No employee with {enteredName} found in the list.");
-                        };
+                        EmployeeCountCheck(foundEmployees);
                     }
                     else if (category == "DateOfBirth")
                     {
@@ -199,46 +192,32 @@ namespace Employees
 
                         try
                         {
-                            string enteredDateOfBirth = Console.ReadLine();
+                            FindByPrompt(category);
 
-                            DateTime convertedDateOfBirth = DateTime.Parse(enteredDateOfBirth);
+                            DateTime convertedDateOfBirth = DateTime.Parse(enteredData);
 
                             List<Employee> foundEmployees = employees.FindAll(e => e.DateOfBirth == convertedDateOfBirth);
 
-                            if (foundEmployees.Count != 0)
-                            {
-                                Result(foundEmployees);
-                            }
-                            else
-                            {
-                                Console.WriteLine($"No employee with date of birth of {enteredDateOfBirth} found in the list.");
-                            };
+                            EmployeeCountCheck(foundEmployees);
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Error! Please, enter the date of birth in a correct format as suggested above.");
+                            InvalidInpubMessage();
                         };
                     }
                     else if (category == "Salary")
                     {
-                        Console.WriteLine("Enter the employee Salary.");
+                        FindByPrompt(category);
 
-                        int enteredSalary = int.Parse(Console.ReadLine());
+                        int convertedData = int.Parse(enteredData);
 
-                        List<Employee> foundEmployees = employees.FindAll(e => e.Salary == enteredSalary);
+                        List<Employee> foundEmployees = employees.FindAll(e => e.Salary == convertedData);
 
-                        if (foundEmployees.Count != 0)
-                        {
-                            Result(foundEmployees);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"No employee with {enteredSalary} found in the list.");
-                        };
+                        EmployeeCountCheck(foundEmployees);
                     }
                     else
                     {
-                        Console.WriteLine("I do not understand this category. Next time enter one of the options: Name, DateOfBirth, Salary");
+                        InvalidInpubMessage();
                     };
                 }
                 else if (command == "Remove")
@@ -285,8 +264,7 @@ namespace Employees
                 }
                 else
                 {
-                    Console.WriteLine("*** I do not understand this command. Please, try again." +
-                        "Enter of of the options: Add, List, Sort, Find, Remove.***");
+                    InvalidInpubMessage();
                 };
             };
         }
@@ -324,6 +302,40 @@ namespace Employees
             Console.WriteLine($"What category would you like to {command} by? Enter one of the options: Name, DateOfBirth, Salary");
 
             category = Console.ReadLine();
+        }
+
+        public static void NotFoundMessage(string category, string enteredData)
+        {
+            Console.WriteLine($"No employee with {category} of {enteredData} found in the list.");
+        }
+
+        public static void SortingDirectionError()
+        {
+            Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
+        }
+
+        public static void InvalidInpubMessage()
+        {
+            Console.WriteLine("Error! Please, enter a valid input in a correct format.");
+        }
+
+        public static void FindByPrompt(string category)
+        {
+            Console.WriteLine($"Enter the employee {category}.");
+
+            enteredData = Console.ReadLine();
+        }
+
+        public static void EmployeeCountCheck(List<Employee> foundEmployees)
+        {
+            if (foundEmployees.Count != 0)
+            {
+                Result(foundEmployees);
+            }
+            else
+            {
+                NotFoundMessage(category, enteredData);
+            };
         }
     }
 }
