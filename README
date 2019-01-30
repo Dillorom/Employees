@@ -1,5 +1,5 @@
 ABOUT
 
-A Console App created in C# on Visual Studio, that adds, lists, sorts, finds and removes employees to the list. 
+A Console App created in C# on Visual Studio, that adds, lists, sorts, finds and removes employees to and from the list. 
 Sorting and finding can be conducted based on categories of employee name, date of birth and salary. 
 
