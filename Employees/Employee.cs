@@ -14,31 +14,29 @@ namespace Employees
 
         public int Salary { get; set; }
 
+        public bool ValidName()
+        {
+            return this.Name == "" ? false : true;
+        }
+
         public bool ValidDateOfBirth()
         {
             System.Type dateTime = typeof(DateTime);
 
-            if (this.DateOfBirth.GetType()  == dateTime)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return this.DateOfBirth.GetType() == dateTime ? true : false;
         }
 
         public bool ValidSalary()
         {
             System.Type integer = typeof(int);
-  
-            if (this.Salary.GetType() == integer)
-            {
-                return true;
-            }
-            else if (this.Salary == 0)
+
+            if (this.Salary == 0)
             {
                 return false;
+            }
+            else if (this.Salary.GetType() == integer)
+            {
+                return true;
             }
             else
             {

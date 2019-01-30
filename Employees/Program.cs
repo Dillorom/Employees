@@ -8,9 +8,9 @@ namespace Employees
     {
         static List<Employee> employees = new List<Employee>();
 
-        static string sortingDirection;
-
         static string category;
+
+        static string sortingDirection;
 
         static string enteredData;
 
@@ -29,26 +29,36 @@ namespace Employees
                     Employee newEmployee = new Employee();
                     newEmployee.Id = Guid.NewGuid();
 
-                    Console.WriteLine("What is the name of a new employee?");
-                    newEmployee.Name = Console.ReadLine();
-
                     bool condition = true;
 
                     while (condition)
+                    {
+                        Console.WriteLine("What is the name of the new employee?");
+                        newEmployee.Name = Console.ReadLine();
+
+                        if (!newEmployee.ValidName())
+                        {
+                            InvalidInputMessage();
+                        }
+                        else
+                        {
+                            condition = false;
+                        };
+                    }
+
+                    while (!condition)
                     {
                         DateOfBirthPropt();
 
                         try
                         {
-                            string dateOfBirth = Console.ReadLine();
-
-                            DateTime DateOfBirth = DateTime.Parse(dateOfBirth);
+                            DateTime DateOfBirth = DateTime.Parse(enteredData);
 
                             newEmployee.DateOfBirth = DateOfBirth;
 
                             if (!newEmployee.ValidDateOfBirth())
                             {
-                                InvalidInpubMessage();
+                                InvalidInputMessage();
                             }
                             else
                             {
@@ -57,11 +67,11 @@ namespace Employees
                         }
                         catch (Exception)
                         {
-                            InvalidInpubMessage();
+                            InvalidInputMessage();
                         }
                     };
 
-                    while (!condition)
+                    while (condition)
                     {
                         Console.WriteLine("What is the salary of the new employee?");
 
@@ -71,11 +81,11 @@ namespace Employees
 
                             if (!newEmployee.ValidSalary())
                             {
-                                InvalidInpubMessage();
+                                InvalidInputMessage();
                             }
                             else
                             {
-                                if (newEmployee.ValidDateOfBirth() && newEmployee.ValidSalary())
+                                if (newEmployee.ValidName() && (newEmployee.ValidDateOfBirth() && newEmployee.ValidSalary()))
                                 {
                                     employees.Add(newEmployee);
 
@@ -87,10 +97,11 @@ namespace Employees
                         }
                         catch (Exception)
                         {
-                            InvalidInpubMessage();
+                            InvalidInputMessage();
                         };
                     };
                 }
+
                 else if (command == "List")
                 {
                     if (employees.Count != 0)
@@ -192,8 +203,6 @@ namespace Employees
 
                         try
                         {
-                            FindByPrompt(category);
-
                             DateTime convertedDateOfBirth = DateTime.Parse(enteredData);
 
                             List<Employee> foundEmployees = employees.FindAll(e => e.DateOfBirth == convertedDateOfBirth);
@@ -202,7 +211,7 @@ namespace Employees
                         }
                         catch (Exception)
                         {
-                            InvalidInpubMessage();
+                            InvalidInputMessage();
                         };
                     }
                     else if (category == "Salary")
@@ -217,7 +226,7 @@ namespace Employees
                     }
                     else
                     {
-                        InvalidInpubMessage();
+                        InvalidInputMessage();
                     };
                 }
                 else if (command == "Remove")
@@ -264,7 +273,7 @@ namespace Employees
                 }
                 else
                 {
-                    InvalidInpubMessage();
+                    InvalidInputMessage();
                 };
             };
         }
@@ -282,6 +291,7 @@ namespace Employees
         {
             Console.WriteLine("What is the date of birth of the new employee? Format options: 'MM/DD/YY', 'MM/DD/YYYY',\n" +
                         " 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'.");
+            enteredData = Console.ReadLine();
         }
 
         public static void OrderCategoryMessageAndResult(string sortingDirection, string category, List<Employee> sortedEmployees)
@@ -314,7 +324,7 @@ namespace Employees
             Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
         }
 
-        public static void InvalidInpubMessage()
+        public static void InvalidInputMessage()
         {
             Console.WriteLine("Error! Please, enter a valid input in a correct format.");
         }
