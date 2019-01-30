@@ -30,8 +30,7 @@ namespace Employees
 
                     while (condition)
                     {
-                        Console.WriteLine("What is the date of birth of the new employee? Format options: 'MM/DD/YY', 'MM/DD/YYYY',\n" +
-                        " 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'.");
+                        DateOfBirthPropt();
 
                         try
                         {
@@ -117,17 +116,13 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).ToList();
 
-                            Console.WriteLine("Sorting employees in an ascending order by name: ");
-
-                            Result(sortedEmployees);
+                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
                         }
                         else if (sortingDirection == "Descending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).Reverse().ToList();
 
-                            Console.WriteLine("Sorting employees in a descending order by name: ");
-
-                            Result(sortedEmployees);
+                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
                         }
                         else
                         {
@@ -144,17 +139,13 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).ToList();
 
-                            Console.WriteLine("Sorting employees in an ascending order by date of birth: ");
-
-                            Result(sortedEmployees);
+                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
                         }
                         else if (sortingDirection == "Descending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).Reverse().ToList();
 
-                            Console.WriteLine("Sorting employees in a descending order by date of birth: ");
-
-                            Result(sortedEmployees);
+                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
                         }
                         else
                         {
@@ -171,17 +162,13 @@ namespace Employees
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).ToList();
 
-                            Console.WriteLine("Sorting employees in an ascending order by salary: ");
-
-                            Result(sortedEmployees);
+                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
                         }
                         else if (sortingDirection == "Descending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).Reverse().ToList();
 
-                            Console.WriteLine("Sorting employees in a descending order by salary: ");
-
-                            Result(sortedEmployees);
+                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
                         }
                         else
                         {
@@ -214,7 +201,7 @@ namespace Employees
                     }
                     else if (category == "DateOfBirth")
                     {
-                        Console.WriteLine("Enter the employee DateOfBirth. Format options: 'MM/DD/YY', 'MM/DD/YYYY', 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'.");
+                        DateOfBirthPropt();
 
                         try
                         {
@@ -317,6 +304,18 @@ namespace Employees
                 Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
                         $" Salary: {e.Salary}");
             };
+        }
+
+        public static void DateOfBirthPropt()
+        {
+            Console.WriteLine("What is the date of birth of the new employee? Format options: 'MM/DD/YY', 'MM/DD/YYYY',\n" +
+                        " 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'.");
+        }
+
+        public static void OrderCategoryMessageAndResult(string sortingDirection, string category, List<Employee> sortedEmployees)
+        {
+            Console.WriteLine($"Sorting employees in a {sortingDirection} order by {category}: ");
+            Result(sortedEmployees);
         }
     }
 }
