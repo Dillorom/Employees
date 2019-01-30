@@ -8,6 +8,10 @@ namespace Employees
     {
         static List<Employee> employees = new List<Employee>();
 
+        static string sortingDirection;
+
+        static string category;
+
         static void Main(string[] args)
         {
             bool exit = false;
@@ -65,7 +69,7 @@ namespace Employees
 
                             if (!newEmployee.ValidSalary())
                             {
-                                Console.WriteLine("Error! Please, enter the date of birth in a correct format as suggested above.");
+                                Console.WriteLine("Error!Please, enter digits only.");
                             }
                             else
                             {
@@ -102,15 +106,11 @@ namespace Employees
                 }
                 else if (command == "Sort")
                 {
-                    Console.WriteLine("What category would you like to sort by? Enter one of the options: Name, DateOfBirth, Salary");
-
-                    string category = Console.ReadLine();
+                    CategoryPrompt(command);
 
                     if (category == "Name")
                     {
-                        Console.WriteLine("Ascending or Descending?");
-
-                        string sortingDirection = Console.ReadLine();
+                        SortingDirectionPrompt();
 
                         if (sortingDirection == "Ascending")
                         {
@@ -131,9 +131,7 @@ namespace Employees
                     }
                     else if (category == "DateOfBirth")
                     {
-                        Console.WriteLine("Ascending or Descending?");
-
-                        string sortingDirection = Console.ReadLine();
+                        SortingDirectionPrompt();
 
                         if (sortingDirection == "Ascending")
                         {
@@ -154,9 +152,7 @@ namespace Employees
                     }
                     else if (category == "Salary")
                     {
-                        Console.WriteLine("Ascending or Descending?");
-
-                        string sortingDirection = Console.ReadLine();
+                        SortingDirectionPrompt();
 
                         if (sortingDirection == "Ascending")
                         {
@@ -178,9 +174,7 @@ namespace Employees
                 }
                 else if (command == "Find")
                 {
-                    Console.WriteLine("What category would you like to find by? Enter one of the options: Name, DateOfBirth, Salary");
-
-                    string category = Console.ReadLine();
+                    CategoryPrompt(command);
 
                     if (category == "Name")
                     {
@@ -257,7 +251,7 @@ namespace Employees
 
                     if (toBeRemovedEmployees.Count > 1)
                     {
-                        Console.WriteLine($"Which {name} would you like to remove? Please, select the employee number fromt he list.");
+                        Console.WriteLine($"Which {name} would you like to remove? Please, select the employee number from the list.");
 
                         for (int i = 0; i < toBeRemovedEmployees.Count; i++)
                         {
@@ -316,6 +310,20 @@ namespace Employees
         {
             Console.WriteLine($"Sorting employees in a {sortingDirection} order by {category}: ");
             Result(sortedEmployees);
+        }
+
+        public static void SortingDirectionPrompt()
+        {
+            Console.WriteLine("Ascending or Descending?");
+
+            sortingDirection = Console.ReadLine();
+        }
+
+        public static void CategoryPrompt(string command)
+        {
+            Console.WriteLine($"What category would you like to {command} by? Enter one of the options: Name, DateOfBirth, Salary");
+
+            category = Console.ReadLine();
         }
     }
 }
