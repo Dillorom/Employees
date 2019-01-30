@@ -6,10 +6,10 @@ namespace Employees
 {
     class Program
     {
+        static List<Employee> employees = new List<Employee>();
+
         static void Main(string[] args)
         {
-            List<Employee> employees = new List<Employee>();
-
             bool exit = false;
 
             while (!exit)
@@ -111,31 +111,23 @@ namespace Employees
                     {
                         Console.WriteLine("Ascending or Descending?");
 
-                        string choice = Console.ReadLine();
+                        string sortingDirection = Console.ReadLine();
 
-                        if (choice == "Ascending")
+                        if (sortingDirection == "Ascending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).ToList();
 
                             Console.WriteLine("Sorting employees in an ascending order by name: ");
 
-                            foreach (Employee e in sortedEmployees)
-                            {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                        $" Salary: {e.Salary}");
-                            };
+                            Result(sortedEmployees);
                         }
-                        else if (choice == "Descending")
+                        else if (sortingDirection == "Descending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).Reverse().ToList();
 
                             Console.WriteLine("Sorting employees in a descending order by name: ");
 
-                            foreach (Employee e in sortedEmployees)
-                            {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                        $" Salary: {e.Salary}");
-                            };
+                            Result(sortedEmployees);
                         }
                         else
                         {
@@ -146,31 +138,23 @@ namespace Employees
                     {
                         Console.WriteLine("Ascending or Descending?");
 
-                        string choice = Console.ReadLine();
+                        string sortingDirection = Console.ReadLine();
 
-                        if (choice == "Ascending")
+                        if (sortingDirection == "Ascending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).ToList();
 
                             Console.WriteLine("Sorting employees in an ascending order by date of birth: ");
 
-                            foreach (Employee e in sortedEmployees)
-                            {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                        $" Salary: {e.Salary}");
-                            };
+                            Result(sortedEmployees);
                         }
-                        else if (choice == "Descending")
+                        else if (sortingDirection == "Descending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).Reverse().ToList();
 
                             Console.WriteLine("Sorting employees in a descending order by date of birth: ");
 
-                            foreach (Employee e in sortedEmployees)
-                            {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                        $" Salary: {e.Salary}");
-                            };
+                            Result(sortedEmployees);
                         }
                         else
                         {
@@ -181,31 +165,23 @@ namespace Employees
                     {
                         Console.WriteLine("Ascending or Descending?");
 
-                        string choice = Console.ReadLine();
+                        string sortingDirection = Console.ReadLine();
 
-                        if (choice == "Ascending")
+                        if (sortingDirection == "Ascending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).ToList();
 
                             Console.WriteLine("Sorting employees in an ascending order by salary: ");
 
-                            foreach (Employee e in sortedEmployees)
-                            {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                        $" Salary: {e.Salary}");
-                            };
+                            Result(sortedEmployees);
                         }
-                        else if (choice == "Descending")
+                        else if (sortingDirection == "Descending")
                         {
                             List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).Reverse().ToList();
 
                             Console.WriteLine("Sorting employees in a descending order by salary: ");
 
-                            foreach (Employee e in sortedEmployees)
-                            {
-                                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                        $" Salary: {e.Salary}");
-                            };
+                            Result(sortedEmployees);
                         }
                         else
                         {
@@ -229,11 +205,7 @@ namespace Employees
 
                         if (foundEmployees.Count != 0)
                         {
-                            foreach (Employee e in foundEmployees)
-                            {
-                                Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                    $" Salary: {e.Salary}");
-                            };
+                            Result(foundEmployees);
                         }
                         else
                         {
@@ -254,11 +226,7 @@ namespace Employees
 
                             if (foundEmployees.Count != 0)
                             {
-                                foreach (Employee e in foundEmployees)
-                                {
-                                    Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                        $" Salary: {e.Salary}");
-                                };
+                                Result(foundEmployees);
                             }
                             else
                             {
@@ -280,11 +248,7 @@ namespace Employees
 
                         if (foundEmployees.Count != 0)
                         {
-                            foreach (Employee e in foundEmployees)
-                            {
-                                Console.WriteLine($" Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                    $" Salary: {e.Salary}");
-                            };
+                            Result(foundEmployees);
                         }
                         else
                         {
@@ -345,8 +309,17 @@ namespace Employees
                 };
             };
         }
-    };
-};
+
+        public static void Result(List<Employee> sortedEmployees)
+        {
+            foreach (Employee e in sortedEmployees)
+            {
+                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
+                        $" Salary: {e.Salary}");
+            };
+        }
+    }
+}
 
 
 
