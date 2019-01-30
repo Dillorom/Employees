@@ -14,7 +14,7 @@ namespace Employees
 
             while (!exit)
             {
-                Console.WriteLine("What would you like to do? Enter one of the options: Add, List, Sort, Find, Remove.");
+                Console.WriteLine("What would you like to do? Enter one of the options: Add, List, Sort, Find, Remove, Exit.");
 
                 string command = Console.ReadLine();
 
