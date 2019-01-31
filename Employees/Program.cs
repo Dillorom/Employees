@@ -24,333 +24,343 @@ namespace Employees
 
                 string command = Console.ReadLine();
 
-                if (command == "Add")
+                switch (command)
                 {
-                    Employee newEmployee = new Employee();
+                    case "Add":
 
-                    newEmployee.Id = Guid.NewGuid();
+                        Employee newEmployee = new Employee();
 
-                    bool nameCondition = true;
+                        newEmployee.Id = Guid.NewGuid();
 
-                    while (nameCondition)
-                    {
-                        Console.WriteLine("What is the name of the new employee?");
+                        bool nameCondition = true;
 
-                        newEmployee.Name = Console.ReadLine();
-
-                        if (!newEmployee.ValidName())
+                        while (nameCondition)
                         {
-                            InvalidInputMessage();
-                        }
-                        else
-                        {
-                            nameCondition = false;
-                        };
-                    }
+                            Console.WriteLine("What is the name of the new employee?");
 
-                    bool dateOfBirthCondition = true;
+                            newEmployee.Name = Console.ReadLine();
 
-                    while (dateOfBirthCondition)
-                    {
-                        DateOfBirthPropt();
-
-                        try
-                        {
-                            DateTime DateOfBirth = DateTime.Parse(enteredData);
-
-                            newEmployee.DateOfBirth = DateOfBirth;
-
-                            if (!newEmployee.ValidDateOfBirth())
+                            if (!newEmployee.ValidName())
                             {
                                 InvalidInputMessage();
                             }
                             else
                             {
-                                dateOfBirthCondition = false;
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            InvalidInputMessage();
-                        }
-                    };
-
-                    bool salaryCondition = true;
-
-                    while (salaryCondition)
-                    {
-                        Console.WriteLine("What is the salary of the new employee?");
-
-                        try
-                        {
-                            newEmployee.Salary = int.Parse(Console.ReadLine());
-
-                            if (!newEmployee.ValidSalary())
-                            {
-                                InvalidInputMessage();
-                            }
-                            else
-                            {
-                                if (newEmployee.ValidName() && (newEmployee.ValidDateOfBirth() && newEmployee.ValidSalary()))
-                                {
-                                    employees.Add(newEmployee);
-
-                                    Console.WriteLine($"New employee {newEmployee.Name} with date of birth on\n" +
-                                        $" {newEmployee.DateOfBirth.ToString("MM/dd/yyyy")} and salary of {newEmployee.Salary} has been added.");
-                                    break;
-                                }
+                                nameCondition = false;
                             };
                         }
-                        catch (Exception)
+
+                        bool dateOfBirthCondition = true;
+
+                        while (dateOfBirthCondition)
                         {
-                            InvalidInputMessage();
+                            DateOfBirthPropt();
+
+                            try
+                            {
+                                DateTime DateOfBirth = DateTime.Parse(enteredData);
+
+                                newEmployee.DateOfBirth = DateOfBirth;
+
+                                if (!newEmployee.ValidDateOfBirth())
+                                {
+                                    InvalidInputMessage();
+                                }
+                                else
+                                {
+                                    dateOfBirthCondition = false;
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                InvalidInputMessage();
+                            }
                         };
-                    };
-                }
-                else if (command == "List")
-                {
-                    if (employees.Count != 0)
-                    {
-                        for (int i = 0; i < employees.Count; i++)
+
+                        bool salaryCondition = true;
+
+                        while (salaryCondition)
                         {
-                            Console.WriteLine($"{i + 1}. Name: {employees[i].Name}, Date of Birth: {employees[i].DateOfBirth.ToString("MM/dd/yyyy")}," +
-                                $" Salary: {employees[i].Salary}");
+                            Console.WriteLine("What is the salary of the new employee?");
+
+                            try
+                            {
+                                newEmployee.Salary = int.Parse(Console.ReadLine());
+
+                                if (!newEmployee.ValidSalary())
+                                {
+                                    InvalidInputMessage();
+                                }
+                                else
+                                {
+                                    if (newEmployee.ValidName() && (newEmployee.ValidDateOfBirth() && newEmployee.ValidSalary()))
+                                    {
+                                        employees.Add(newEmployee);
+
+                                        Console.WriteLine($"New employee {newEmployee.Name} with date of birth on\n" +
+                                            $" {newEmployee.DateOfBirth.ToString("MM/dd/yyyy")} and salary of {newEmployee.Salary} has been added.");
+                                        break;
+                                    }
+                                };
+                            }
+                            catch (Exception)
+                            {
+                                InvalidInputMessage();
+                            };
                         };
-                    }
-                    else
-                    {
-                        Console.WriteLine("*** There are no employees in the list. ***");
-                    };
-                }
-                else if (command == "Sort")
-                {
-                    CategoryPrompt(command);
+                        break;
 
-                    if (category == "Name")
-                    {
-                        SortingDirectionPrompt();
+                    case "List":
 
-                        if (sortingDirection == "Ascending")
+                        if (employees.Count != 0)
                         {
-                            List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).ToList();
-
-                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
-                        }
-                        else if (sortingDirection == "Descending")
-                        {
-                            List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).Reverse().ToList();
-
-                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            for (int i = 0; i < employees.Count; i++)
+                            {
+                                Console.WriteLine($"{i + 1}. Name: {employees[i].Name}, Date of Birth: {employees[i].DateOfBirth.ToString("MM/dd/yyyy")}," +
+                                    $" Salary: {employees[i].Salary}");
+                            };
                         }
                         else
                         {
-                            SortingDirectionError();
-                        }
-                    }
-                    else if (category == "DateOfBirth")
-                    {
-                        SortingDirectionPrompt();
-
-                        if (sortingDirection == "Ascending")
-                        {
-                            List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).ToList();
-
-                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
-                        }
-                        else if (sortingDirection == "Descending")
-                        {
-                            List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).Reverse().ToList();
-
-                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
-                        }
-                        else
-                        {
-                            SortingDirectionError();
+                            Console.WriteLine("*** There are no employees in the list. ***");
                         };
-                    }
-                    else if (category == "Salary")
-                    {
-                        SortingDirectionPrompt();
+                        break;
 
-                        if (sortingDirection == "Ascending")
+                    case "Sort":
+
+                        CategoryPrompt(command);
+
+                        if (category == "Name")
                         {
-                            List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).ToList();
+                            SortingDirectionPrompt();
 
-                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            if (sortingDirection == "Ascending")
+                            {
+                                List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).ToList();
+
+                                OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            }
+                            else if (sortingDirection == "Descending")
+                            {
+                                List<Employee> sortedEmployees = employees.OrderBy(e => e.Name).Reverse().ToList();
+
+                                OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            }
+                            else
+                            {
+                                SortingDirectionError();
+                            }
                         }
-                        else if (sortingDirection == "Descending")
+                        else if (category == "DateOfBirth")
                         {
-                            List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).Reverse().ToList();
+                            SortingDirectionPrompt();
 
-                            OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            if (sortingDirection == "Ascending")
+                            {
+                                List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).ToList();
+
+                                OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            }
+                            else if (sortingDirection == "Descending")
+                            {
+                                List<Employee> sortedEmployees = employees.OrderBy(e => e.DateOfBirth).Reverse().ToList();
+
+                                OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            }
+                            else
+                            {
+                                SortingDirectionError();
+                            };
                         }
-                        else
+                        else if (category == "Salary")
                         {
-                            SortingDirectionError();
+                            SortingDirectionPrompt();
+
+                            if (sortingDirection == "Ascending")
+                            {
+                                List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).ToList();
+
+                                OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            }
+                            else if (sortingDirection == "Descending")
+                            {
+                                List<Employee> sortedEmployees = employees.OrderBy(e => e.Salary).Reverse().ToList();
+
+                                OrderCategoryMessageAndResult(sortingDirection, category, sortedEmployees);
+                            }
+                            else
+                            {
+                                SortingDirectionError();
+                            };
                         };
-                    };
-                }
-                else if (command == "Find")
-                {
-                    CategoryPrompt(command);
+                        break;
 
-                    if (category == "Name")
-                    {
-                        FindByPrompt(category);
+                    case "Find":
 
-                        List<Employee> foundEmployees = employees.FindAll(e => e.Name == enteredData);
+                        CategoryPrompt(command);
 
-                        EmployeeCountCheck(foundEmployees);
-                    }
-                    else if (category == "DateOfBirth")
-                    {
-                        DateOfBirthPropt();
-
-                        try
+                        if (category == "Name")
                         {
-                            DateTime convertedDateOfBirth = DateTime.Parse(enteredData);
+                            FindByPrompt(category);
 
-                            List<Employee> foundEmployees = employees.FindAll(e => e.DateOfBirth == convertedDateOfBirth);
+                            List<Employee> foundEmployees = employees.FindAll(e => e.Name == enteredData);
 
                             EmployeeCountCheck(foundEmployees);
                         }
-                        catch (Exception)
+                        else if (category == "DateOfBirth")
+                        {
+                            DateOfBirthPropt();
+
+                            try
+                            {
+                                DateTime convertedDateOfBirth = DateTime.Parse(enteredData);
+
+                                List<Employee> foundEmployees = employees.FindAll(e => e.DateOfBirth == convertedDateOfBirth);
+
+                                EmployeeCountCheck(foundEmployees);
+                            }
+                            catch (Exception)
+                            {
+                                InvalidInputMessage();
+                            };
+                        }
+                        else if (category == "Salary")
+                        {
+                            FindByPrompt(category);
+
+                            int convertedData = int.Parse(enteredData);
+
+                            List<Employee> foundEmployees = employees.FindAll(e => e.Salary == convertedData);
+
+                            EmployeeCountCheck(foundEmployees);
+                        }
+                        else
                         {
                             InvalidInputMessage();
                         };
-                    }
-                    else if (category == "Salary")
-                    {
-                        FindByPrompt(category);
+                        break;
 
-                        int convertedData = int.Parse(enteredData);
+                    case "Remove":
 
-                        List<Employee> foundEmployees = employees.FindAll(e => e.Salary == convertedData);
+                        Console.WriteLine("Enter the employee name.");
 
-                        EmployeeCountCheck(foundEmployees);
-                    }
-                    else
-                    {
-                        InvalidInputMessage();
-                    };
-                }
-                else if (command == "Remove")
-                {
-                    Console.WriteLine("Enter the employee name.");
+                        string name = Console.ReadLine();
 
-                    string name = Console.ReadLine();
+                        List<Employee> toBeRemovedEmployees = employees.FindAll(e => e.Name == name);
 
-                    List<Employee> toBeRemovedEmployees = employees.FindAll(e => e.Name == name);
-
-                    if (toBeRemovedEmployees.Count > 1)
-                    {
-                        Console.WriteLine($"Which {name} would you like to remove? Please, select the employee number from the list.");
-
-                        for (int i = 0; i < toBeRemovedEmployees.Count; i++)
+                        if (toBeRemovedEmployees.Count > 1)
                         {
-                            Console.WriteLine($"{i + 1}. {toBeRemovedEmployees[i].Name}, {toBeRemovedEmployees[i].DateOfBirth.ToString("MM/dd/yyyy")}, " +
-                                $"{toBeRemovedEmployees[i].Salary}.");
+                            Console.WriteLine($"Which {name} would you like to remove? Please, select the employee number from the list.");
+
+                            for (int i = 0; i < toBeRemovedEmployees.Count; i++)
+                            {
+                                Console.WriteLine($"{i + 1}. {toBeRemovedEmployees[i].Name}, {toBeRemovedEmployees[i].DateOfBirth.ToString("MM/dd/yyyy")}, " +
+                                    $"{toBeRemovedEmployees[i].Salary}.");
+                            }
+
+                            int enteredNumber = int.Parse(Console.ReadLine());
+
+                            employees.Remove(toBeRemovedEmployees[enteredNumber - 1]);
+
+                            Console.WriteLine($"Employee Name: {toBeRemovedEmployees[enteredNumber - 1].Name}, Date of Birth:" +
+                                $" {toBeRemovedEmployees[enteredNumber - 1].DateOfBirth.ToString("MM/dd/yyyy")}, " +
+                                $"Salary: {toBeRemovedEmployees[enteredNumber - 1].Salary} has been removed from the list.");
                         }
+                        else
+                        {
+                            employees.Remove(toBeRemovedEmployees[0]);
 
-                        int enteredNumber = int.Parse(Console.ReadLine());
+                            Console.WriteLine($"Employee Name: {toBeRemovedEmployees[0].Name}, Date of Birth: {toBeRemovedEmployees[0].DateOfBirth.ToString("MM/dd/yyyy")}, " +
+                                $"Salary: {toBeRemovedEmployees[0].Salary} has been removed from the list.");
+                        }
+                        break;
 
-                        employees.Remove(toBeRemovedEmployees[enteredNumber - 1]);
+                    case "Exit":
 
-                        Console.WriteLine($"Employee Name: {toBeRemovedEmployees[enteredNumber - 1].Name}, Date of Birth:" +
-                            $" {toBeRemovedEmployees[enteredNumber - 1].DateOfBirth.ToString("MM/dd/yyyy")}, " +
-                            $"Salary: {toBeRemovedEmployees[enteredNumber - 1].Salary} has been removed from the list.");
-                    }
-                    else
-                    {
-                        employees.Remove(toBeRemovedEmployees[0]);
+                        Console.WriteLine("Exiting the application. Goodbye! \nPress any key to confirm the exit.");
 
-                        Console.WriteLine($"Employee Name: {toBeRemovedEmployees[0].Name}, Date of Birth: {toBeRemovedEmployees[0].DateOfBirth.ToString("MM/dd/yyyy")}, " +
-                            $"Salary: {toBeRemovedEmployees[0].Salary} has been removed from the list.");
-                    }
-                }
-                else if (command == "Exit")
+                        Console.ReadKey();
+
+                        exit = true;
+
+                        break;
+
+                    default:
+
+                        InvalidInputMessage();
+                        break;
+                };
+            }
+
+            void Result(List<Employee> sortedEmployees)
+            {
+                foreach (Employee e in sortedEmployees)
                 {
-                    Console.WriteLine("Exiting the application. Goodbye! \nPress any key to confirm the exit.");
+                    Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
+                            $" Salary: {e.Salary}");
+                };
+            }
 
-                    Console.ReadKey();
+            void DateOfBirthPropt()
+            {
+                Console.WriteLine("What is the date of birth of the new employee? Format options: 'MM/DD/YY', 'MM/DD/YYYY',\n" +
+                            " 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'.");
+                enteredData = Console.ReadLine();
+            }
 
-                    exit = true;
+            void OrderCategoryMessageAndResult(string sortingDirection, string category, List<Employee> sortedEmployees)
+            {
+                Console.WriteLine($"Sorting employees in a {sortingDirection} order by {category}: ");
+                Result(sortedEmployees);
+            }
+
+            void SortingDirectionPrompt()
+            {
+                Console.WriteLine("Ascending or Descending?");
+
+                sortingDirection = Console.ReadLine();
+            }
+
+            void CategoryPrompt(string command)
+            {
+                Console.WriteLine($"What category would you like to {command} by? Enter one of the options: Name, DateOfBirth, Salary");
+
+                category = Console.ReadLine();
+            }
+
+            void NotFoundMessage(string category, string enteredData)
+            {
+                Console.WriteLine($"No employee with {category} of {enteredData} found in the list.");
+            }
+
+            void SortingDirectionError()
+            {
+                Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
+            }
+
+            void InvalidInputMessage()
+            {
+                Console.WriteLine("Error! Please, enter a valid input in a correct format.");
+            }
+
+            void FindByPrompt(string category)
+            {
+                Console.WriteLine($"Enter the employee {category}.");
+
+                enteredData = Console.ReadLine();
+            }
+
+            void EmployeeCountCheck(List<Employee> foundEmployees)
+            {
+                if (foundEmployees.Count != 0)
+                {
+                    Result(foundEmployees);
                 }
                 else
                 {
-                    InvalidInputMessage();
+                    NotFoundMessage(category, enteredData);
                 };
-            };
-        }
-
-        public static void Result(List<Employee> sortedEmployees)
-        {
-            foreach (Employee e in sortedEmployees)
-            {
-                Console.WriteLine($"Name: {e.Name}, Date of Birth: {e.DateOfBirth.ToString("MM/dd/yyyy")}," +
-                        $" Salary: {e.Salary}");
-            };
-        }
-
-        public static void DateOfBirthPropt()
-        {
-            Console.WriteLine("What is the date of birth of the new employee? Format options: 'MM/DD/YY', 'MM/DD/YYYY',\n" +
-                        " 'Jan 01, 2019', 'MM.DD.YY', 'MM.DD.YYYY', 'MM-DD-YY', 'MM-DD-YYYY'.");
-            enteredData = Console.ReadLine();
-        }
-
-        public static void OrderCategoryMessageAndResult(string sortingDirection, string category, List<Employee> sortedEmployees)
-        {
-            Console.WriteLine($"Sorting employees in a {sortingDirection} order by {category}: ");
-            Result(sortedEmployees);
-        }
-
-        public static void SortingDirectionPrompt()
-        {
-            Console.WriteLine("Ascending or Descending?");
-
-            sortingDirection = Console.ReadLine();
-        }
-
-        public static void CategoryPrompt(string command)
-        {
-            Console.WriteLine($"What category would you like to {command} by? Enter one of the options: Name, DateOfBirth, Salary");
-
-            category = Console.ReadLine();
-        }
-
-        public static void NotFoundMessage(string category, string enteredData)
-        {
-            Console.WriteLine($"No employee with {category} of {enteredData} found in the list.");
-        }
-
-        public static void SortingDirectionError()
-        {
-            Console.WriteLine("I do not understand this command. Please, enter 'Ascending' or 'Descending'.");
-        }
-
-        public static void InvalidInputMessage()
-        {
-            Console.WriteLine("Error! Please, enter a valid input in a correct format.");
-        }
-
-        public static void FindByPrompt(string category)
-        {
-            Console.WriteLine($"Enter the employee {category}.");
-
-            enteredData = Console.ReadLine();
-        }
-
-        public static void EmployeeCountCheck(List<Employee> foundEmployees)
-        {
-            if (foundEmployees.Count != 0)
-            {
-                Result(foundEmployees);
             }
-            else
-            {
-                NotFoundMessage(category, enteredData);
-            };
         }
     }
 }
