@@ -27,13 +27,15 @@ namespace Employees
                 if (command == "Add")
                 {
                     Employee newEmployee = new Employee();
+
                     newEmployee.Id = Guid.NewGuid();
 
-                    bool condition = true;
+                    bool nameCondition = true;
 
-                    while (condition)
+                    while (nameCondition)
                     {
                         Console.WriteLine("What is the name of the new employee?");
+
                         newEmployee.Name = Console.ReadLine();
 
                         if (!newEmployee.ValidName())
@@ -42,11 +44,13 @@ namespace Employees
                         }
                         else
                         {
-                            condition = false;
+                            nameCondition = false;
                         };
                     }
 
-                    while (!condition)
+                    bool dateOfBirthCondition = true;
+
+                    while (dateOfBirthCondition)
                     {
                         DateOfBirthPropt();
 
@@ -62,7 +66,7 @@ namespace Employees
                             }
                             else
                             {
-                                condition = false;
+                                dateOfBirthCondition = false;
                             }
                         }
                         catch (Exception)
@@ -71,7 +75,9 @@ namespace Employees
                         }
                     };
 
-                    while (condition)
+                    bool salaryCondition = true;
+
+                    while (salaryCondition)
                     {
                         Console.WriteLine("What is the salary of the new employee?");
 
@@ -101,7 +107,6 @@ namespace Employees
                         };
                     };
                 }
-
                 else if (command == "List")
                 {
                     if (employees.Count != 0)
